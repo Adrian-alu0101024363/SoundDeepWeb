@@ -1,0 +1,119 @@
+body {
+  background-color: rgb(68, 57, 57);
+  color: white;
+}
+
+.flex-container {
+  display: flex;
+  padding: 10px;
+  flex-direction: column;
+}
+
+.flex-container div {
+  padding-bottom: 20px;
+}
+
+.title {
+  font-size: 30px;
+}
+#custom-button {
+  padding: 10px 25px;
+  font-size: 20px;
+  font-weight: 500;
+  color: white;
+  background-color: #a58555;
+  border: 1px solid #000;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#custom-button:hover {
+  background-color: #d1c2ab;
+}
+
+#custom-text {
+  margin-left: 10px;
+  font-family: sans-serif;
+}
+
+#real-file {
+  display: none
+}
+
+.audio-div {
+  padding-top: 20px;
+}
+
+#button-1 {
+  color: white;
+  background-color: #3d3a35;
+  padding: 10px;
+  border: 1px solid #000;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#button-1:hover {
+  background-color: #d1c2ab;
+}
+
+#button-2 {
+  color: white;
+  background-color: #3d3a35;
+  padding: 10px;
+  border: 1px solid #000;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#button-2:hover {
+  background-color: #d1c2ab;
+}
+
+#result-text {
+  color: white;
+  background-color: #3d3a35;
+  padding: 10px;
+  width: 33%;
+  border: 1px solid black;
+  border-radius: 5px;
+}
+
+.drag-area {
+  background-color: #3d3a35;
+  border: 2px dashed rgb(17, 16, 16);
+  height: 400px;
+  width: 500px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.drag-area.active {
+  border: 2px solid #fff;
+}
+
+.drag-area .icon {
+  font-size: 100px;
+  color: #fff;
+}
+
+.drag-area header {
+  font-size: 30px;
+  font-weight: 500;
+  color: #fff;
+}
+
+.drag-area span {
+  font-size: 25px;
+  font-weight: 500;
+  color: #fff;
+  margin: 10px 0 15px 0;
+}
+
+
+.drag-area button:hover {
+  background-color: #d1c2ab;
+}

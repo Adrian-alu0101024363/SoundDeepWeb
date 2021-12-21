@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Deepsound</title>
+  <link rel="icon" href="icon.png">
+  <link rel="stylesheet" href="index.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.0/gsap.min.js"></script>
+  <script defer src="index.js"></script>
+</head>
+<body>
+  <div class="flex-container">
+    <div class="title" id="title">
+      Welcome to SoundDeep
+    </div>
+    <div class="drag-area">
+      <header>Drop file to upload</header>
+      <span id="or">OR</span>
+      <button type="button" id="custom-button">Browse File</button>
+      <input type="file" hidden id="real-file">
+      <span id="custom-text">No file chosen yet</span>
+    </div>
+    <div class="audio-div">  
+      <audio controls id="audio-control">
+      <source src="" type="audio/mpeg" id="src">
+      Your explorer is not compatible with audio
+    </audio>
+    </div>
+    <div class="result-div">
+      <div id="result-text">Awesome text</div>
+    </div>
+    <div class="buttons">
+      <button type="button" id="button-1">Button-1</button>
+      <button type="button" id="button-2">Button-2</button>
+    </div>
+
+  </div>
+</body>
+</html>
