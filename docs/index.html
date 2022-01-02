@@ -15,18 +15,32 @@
     <div class="title" id="title">
       Welcome to SoundDeep
     </div>
-    <div class="drag-area">
-      <header>Drop file to upload</header>
-      <span id="or">OR</span>
-      <button type="button" id="custom-button">Browse File</button>
-      <input type="file" hidden id="real-file">
-      <span id="custom-text">No file chosen yet</span>
+    <div class="flex-row">
+      <div class="drag-area">
+        <header>Drop file to upload</header>
+        <span id="or">OR</span>
+        <button type="button" id="custom-button">Browse File</button>
+        <input type="file" hidden id="real-file">
+        <span id="custom-text">No file chosen yet</span>
+      </div>
+      <div class="specto">
+        <img src="../ExY-XsEVcAAa4Bu.jfif" id="spectoimg">
+      </div>
     </div>
-    <div class="audio-div">  
-      <audio controls id="audio-control">
-      <source src="" type="audio/mpeg" id="src">
-      Your explorer is not compatible with audio
-    </audio>
+    <div class="flex-row">
+      <div class="audio-div">  
+        <audio controls id="audio-control">
+        <source src="" type="audio/mpeg" id="src">
+        Your explorer is not compatible with audio
+      </audio>
+      </div>
+    <div class="audio-div-short">  
+      <header>Short audio </header>
+        <audio controls id="audio-short">
+        <source src="" type="audio/mpeg" id="shortaudio">
+        Your explorer is not compatible with audio
+        </audio>  
+      </div>
     </div>
     <div class="result-div">
       <div id="result-text">Awesome text</div>

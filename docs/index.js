@@ -2,6 +2,8 @@ const realFileBtn = document.getElementById('real-file');
 const customBtn = document.getElementById('custom-button');
 const customTxt = document.getElementById('custom-text');
 const audio = document.getElementById('audio-control');
+const shortaudio = document.getElementById('shortaudio');
+const audios = document.getElementById('audio-short')
 const source = document.getElementById('src');
 const result = document.getElementById('result-text');
 const button1 = document.getElementById('button-1');
@@ -13,6 +15,7 @@ button = dropArea.querySelector("button");
 const title = document.getElementById("title"); 
 
 let file; 
+
 
 function bounceEffect() {
   title.style.fontSize = "0";
@@ -92,3 +95,6 @@ button1.addEventListener('click', function() {
 button2.addEventListener('click', function() {
 
 });
+//Testo no tame
+shortaudio.src = 'poli.mp3';
+audios.load();
