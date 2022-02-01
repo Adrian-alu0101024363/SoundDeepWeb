@@ -16,6 +16,7 @@ const title = document.getElementById("title");
 
 let file; 
 
+const model = await tf.loadLayersModel('model.json');
 
 function bounceEffect() {
   title.style.fontSize = "0";
