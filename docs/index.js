@@ -89,10 +89,23 @@ function showFile() {
   }
 }
 
+let predict = function(input) {
+  if (model) {
+    model.predict([tf.tensor(input).reshape([1, 28, 28, 1])]).array().then(function(scores){
+      scores = scores[0];
+      predicted = scores.indexOf(Math.max(...scores));
+      console.log(predicted);
+    });
+  } else {
+    // The model takes a bit to load, if we are too fast, wait
+    setTimeout(function(){predict(input)}, 50);
+  }
+}
 button1.addEventListener('click', function() {
-
+  // necesito aqui el espectograma de mel 
+  //predict(input);
 });
-
+predict(rock100.png);
 button2.addEventListener('click', function() {
 
 });
