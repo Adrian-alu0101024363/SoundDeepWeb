@@ -16,8 +16,8 @@ const title = document.getElementById("title");
 
 let file; 
 
-const model = await tf.loadLayersModel('model.json');
-
+const model = await tf.loadLayersModel('https://adrian-alu0101024363.github.io/SoundDeepWeb/model.json');
+//console.log(model);
 function bounceEffect() {
   title.style.fontSize = "0";
   gsap.to(title, 2, {fontSize: 30, ease: "bounce.out"});
