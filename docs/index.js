@@ -16,8 +16,16 @@ const title = document.getElementById("title");
 
 let file; 
 
-const model = await tf.loadLayersModel('https://adrian-alu0101024363.github.io/SoundDeepWeb/model.json');
+//const model = await tf.loadLayersModel('https://adrian-alu0101024363.github.io/SoundDeepWeb/model.json');
 //console.log(model);
+
+import {PythonShell} from '/node_modules/python-shell/';
+PythonShell.run('main.py', null, 
+function (err) { 
+  if (err) throw err;
+  console.log('finished');
+});
+
 function bounceEffect() {
   title.style.fontSize = "0";
   gsap.to(title, 2, {fontSize: 30, ease: "bounce.out"});
@@ -105,7 +113,9 @@ button1.addEventListener('click', function() {
   // necesito aqui el espectograma de mel 
   //predict(input);
 });
-predict(rock100.png);
+/*let input = [];
+data = 
+predict('rock100.png');*/
 button2.addEventListener('click', function() {
 
 });
