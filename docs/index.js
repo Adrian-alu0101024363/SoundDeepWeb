@@ -19,12 +19,12 @@ let file;
 //const model = await tf.loadLayersModel('https://adrian-alu0101024363.github.io/SoundDeepWeb/model.json');
 //console.log(model);
 
-import {PythonShell} from '/node_modules/python-shell/';
+/*import {PythonShell} from './node_modules/python-shell';
 PythonShell.run('main.py', null, 
 function (err) { 
   if (err) throw err;
   console.log('finished');
-});
+});*/
 
 function bounceEffect() {
   title.style.fontSize = "0";
@@ -82,6 +82,7 @@ dropArea.addEventListener("drop", (event) => {
 
 function showFile() {
   let fileType = file.type;
+  console.log(file);
   let allowedTypes = ["audio/mpeg", "audio/wav"];
   if (allowedTypes.includes(fileType)) {
     customTxt.innerHTML = file.name;
