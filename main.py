@@ -2,10 +2,16 @@ from cgitb import text
 from email.mime import audio
 from tkinter import *
 from os import system
-from turtle import left
+from turtle import color, left
 import pygame
 from tkinter import filedialog
 import wave
+from keras import layers
+from keras.layers import (Input, Add, Dense, Activation, ZeroPadding2D, BatchNormalization, Flatten, 
+                          Conv2D, AveragePooling2D, MaxPooling2D, GlobalMaxPooling2D, Dropout, LSTM)
+from keras.models import Model, Sequential, model_from_json
+from keras.preprocessing import image
+from keras.utils import layer_utils
 from clip import *
 import librosa
 import librosa.display
@@ -17,15 +23,17 @@ from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 from PIL import ImageTk,Image,ImageOps
 
 root = Tk()
-root.title('SoundDeep')
+root.title('SounDeep')
 root.geometry("600x400")
+logo = PhotoImage(file="logonormal.png")
+root.iconphoto(False, logo)
 menu = Menu(root, tearoff=False)
 root.config(menu=menu)
 subMenu = Menu(root, tearoff=False)
 menu.add_cascade(label="File", menu=subMenu)
 pygame.init()
 audioFile = None
-resultText = "Predict"
+resultText = "Not yet predicted"
 
 def playOriginal():
   global audioFile
@@ -38,14 +46,20 @@ def playOriginal():
 
 def spectogram():
   y,sr = librosa.load('best-moment.wav', duration=3)
-  #S = librosa.feature.melspectrogram(y=y, sr=sr, n_mels=128, fmax=8000, hop_length=((1 + np.array(y).shape[0]) // 64), n_fft=2048)
-  S = librosa.feature.melspectrogram(y=y, sr=sr)
+  S = librosa.feature.melspectrogram(y=y, sr=sr, n_mels=128, fmax=8000, hop_length=((1 + np.array(y).shape[0]) // 64), n_fft=2048)
+  #S = librosa.feature.melspectrogram(y=y, sr=sr)
   fig = plt.figure()
   canvas = FigureCanvas(fig)
   #plt.imsave('specto.png', librosa.power_to_db(S,ref=np.max))
-  plt.imshow(librosa.power_to_db(S,ref=np.max))
+  #plt.imshow(librosa.power_to_db(S,ref=np.max))
   #librosa.display.specshow(librosa.power_to_db(S,ref=np.max))
+  model = load_model()
+  print(model)
+  #predicted = model.predict()
+  #global resulText
+  #resultText = predicted
   plt.show()
+  root.mainloop()
   ''''
   myImage = ImageTk.PhotoImage(image)
   window = Toplevel(root)
@@ -91,48 +105,62 @@ def createAlert():
   alert.mainloop()
   
 def quitr():
-  root.quit()
   root.destroy()
-  #exit()
 
+def load_model():
+  model = model_from_json(open('model_architecture.json').read())
+  model.load_weights('model_weights.h5')
+  #model.compile(optimizer='sgd', loss='categorical_crossentropy', metrics=['accuracy', get_f1])
+  return model
+ 
 def on_enter(e):
-  e.widget['background'] = 'grey'
+  e.widget['background'] = '#7393BC'
 def on_leave(e):
   e.widget['background'] = 'SystemButtonFace'
 
+
+# Labels, buttons, UI stuff
 main_frame = Frame(root, width=600, height=400)
 main_frame.pack()
-bg = PhotoImage(file="background.png")
+img = Image.open("logopequeño.png")
+bgImg = Image.open("background2.png")
+welcomeImg = PhotoImage(file="welcome2.png")
+bgImg.paste(img,(480,300), img)
+bgImg.save('NewImg.png',"PNG")
+bg = PhotoImage(file="NewImg.png")
 bgLabel = Label(main_frame, image=bg)
 bgLabel.place(x = 0, y = 0)
-originalLabel = Label(main_frame, text="Original song: ",font=("Helvetica",12))
-originalLabel.place(x=50,y=20)
-originalLabel.configure(background="grey")
-play_button = Button(root, text="Play song  ", font=("Helvetica", 16), command=playOriginal)
-play_button.place(x=180,y=10)
+welcomeLabel = Label(main_frame,image=welcomeImg,font=("Modern",22))
+welcomeLabel.place(x=140,y=20)
+welcomeLabel.configure(background="#EEE8A0")
+originalLabel = Label(main_frame, text="Original song: ",font=("Modern",12))
+originalLabel.place(x=50,y=120)
+originalLabel.configure(background="#EEE8A9")
+play_button = Button(root, text="Play song  ", font=("Modern", 16), command=playOriginal)
+play_button.place(x=180,y=110)
 play_button.bind("<Enter>", on_enter)
 play_button.bind("<Leave>", on_leave)
-stop_button = Button(root, text="Stop sound", font=("Helvetica", 16), command=stopOriginal)
-stop_button.place(x=320,y=10)
+stop_button = Button(root, text="Stop song", font=("Modern", 16), command=stopOriginal)
+stop_button.place(x=320,y=110)
 stop_button.bind("<Enter>", on_enter)
 stop_button.bind("<Leave>", on_leave)
-clipLabel = Label(main_frame, text="Clipped song: ",font=("Helvetica",12))
-clipLabel.configure(background="grey")
-clipLabel.place(x=50,y=160)
-clip_button = Button(root, text="Play clip  ", font=("Helvetica", 16), command=playCutVersion)
-clip_button.place(x=180,y=140)
+clipLabel = Label(main_frame, text="Clipped song: ",font=("Modern",12))
+clipLabel.configure(background="#EEE8A9")
+clipLabel.place(x=50,y=260)
+clip_button = Button(root, text="Play clip  ",background="#3C85C7", font=("Modern", 16), command=playCutVersion)
+clip_button.place(x=180,y=240)
 clip_button.bind("<Enter>", on_enter)
 clip_button.bind("<Leave>", on_leave)
-clip_stop_button = Button(root, text="Stop clip", font=("Helvetica", 16), command=stopCutVersion)
-clip_stop_button.place(x=320,y=140)
+clip_stop_button = Button(root, text="Stop clip", font=("Modern", 16), command=stopCutVersion)
+clip_stop_button.place(x=320,y=240)
 clip_stop_button.bind("<Enter>", on_enter)
 clip_stop_button.bind("<Leave>", on_leave)
-predictLabel = Label(main_frame, text="Prediction: ",font=("Helvetica",12))
-predictLabel.configure(background="grey")
-resultLabel = Label(main_frame, text=resultText,font=("Helvetica",12))
-resultLabel.configure(background="grey")
-resultLabel.place(x=180,y=240)
-predictLabel.place(x=50,y=240)
+predictLabel = Label(main_frame, text="Prediction: ",font=("Modern",12))
+predictLabel.configure(background="#EEE8A9")
+resultLabel = Label(main_frame, text=resultText,font=("Modern",12))
+resultLabel.configure(background="#DFA01F")
+resultLabel.place(x=180,y=340)
+predictLabel.place(x=50,y=340)
 subMenu.add_command(label="Load", command=loadAudio)
-root.mainloop()
 root.protocol("WM_DELETE_WINDOW", quitr)
+root.mainloop()
